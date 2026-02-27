@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>มงคุณธรรม - บายศรี งานพิธี เครื่องบวงสรวง</title>
+    <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/brbWtVb9/s-m.jpg"> 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -502,7 +503,7 @@
                 name: document.getElementById('cust-name').value,
                 phone: document.getElementById('cust-phone').value,
                 address: document.getElementById('cust-address').value,
-                date: document.getElementById('cust-date').value,
+                event_date: document.getElementById('cust-date').value,
                 items: cart.map(i => `${i.name} (จำนวน ${i.qty})`).join(', '),
                 total: document.getElementById('cart-total').innerText
             };
