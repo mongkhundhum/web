@@ -410,7 +410,9 @@ function closeCheckout() {
     document.getElementById('checkout-modal').classList.replace('flex', 'hidden'); 
 }
 
-window.onload = () => filterProducts('all');
+document.addEventListener('DOMContentLoaded', () => {
+    filterProducts('all');
+});
 
         // ฟังก์ชันบันทึกรูปภาพใหม่
         async function saveAsImage() {
@@ -488,6 +490,7 @@ window.onload = () => filterProducts('all');
     </script>
 </body>
 </html>
+
 
 
 
