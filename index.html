@@ -299,100 +299,118 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLVApNZKquzEIqP9MlWSfwaWU_OO5UrARZVSmS_OxmwRVGZ7xrykhE3WXc_sHFQ32d/exec";
         
         const products = [
-            { id: 1, name: "บายศรีเทพ 5 ชั้น", price: 2500, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
-            { id: 2, name: "บายศรีพรหม 7 ชั้น", price: 4500, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
-            { id: 3, name: "ชุดพานขวัญพรีเมียม", price: 1800, category: "พาน", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
-            { id: 4, name: "เครื่องบวงสรวงชุดเล็ก", price: 3500, category: "พิธี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
-            { id: 5, name: "บายศรีต้นชุดหลวง", price: 8500, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
-            { id: 6, name: "พานหมากเบ็งคู่", price: 800, category: "พาน", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
-	    { id: 7, name: "บายศรีต้นชุดหลวง", price: 8500, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
-	    { id: 8, name: "บายศรีต้นชุดหลวง", price: 8500, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
+    { id: 1, name: "บายศรีเทพ 5 ชั้น", price: 2500, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
+    { id: 2, name: "บายศรีพรหม 7 ชั้น", price: 4500, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
+    { id: 3, name: "ชุดพานขวัญพรีเมียม", price: 1800, category: "พาน", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
+    { id: 4, name: "เครื่องบวงสรวงชุดเล็ก", price: 3500, category: "พิธี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
+    { id: 5, name: "บายศรีต้นชุดหลวง", price: 8500, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
+    { id: 6, name: "พานหมากเบ็งคู่", price: 800, category: "พาน", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
+    { id: 7, name: "บายศรีต้นชุดพิเศษ", price: 9500, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
+    { id: 8, name: "บายศรีใหญ่พิเศษ", price: 12000, category: "บายศรี", img: "https://i.postimg.cc/vZ4tBxsH/Gemini-Generated-Image-uhgx7duhgx7duhgx.png" },
+];
 
-        ];
+let cart = [];
 
-        let cart = [];
-		
-   function renderProducts(items) {
-            const grid = document.getElementById('product-grid');
-            if (!grid) return; // กัน Error ถ้าหา Grid ไม่เจอ
+// ฟังก์ชันแสดงผลสินค้า (ใช้พารามิเตอร์ items เพื่อให้ Filter ได้)
+function renderProducts(items) {
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
 
-            grid.innerHTML = items.map(product => `
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group">
-                    <img src="${product.img}" class="w-full h-64 object-cover" alt="${product.name}">
-                    <div class="p-6">
-                        <span class="text-xs font-semibold text-brick uppercase tracking-wider">${product.category}</span>
-                        <h4 class="text-xl font-bold mt-2 mb-4">${product.name}</h4>
-                        <button onclick="openCheckout()" class="w-full py-3 bg-gray-900 text-white rounded-xl font-medium hover:bg-brick transition-colors">
-                            สั่งจอง
-                        </button>
-                    </div>
+    grid.innerHTML = items.map(p => `
+        <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full border border-gray-50 group">
+            <div class="relative overflow-hidden">
+                <img src="${p.img}" class="aspect-[4/5] object-cover transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-brick shadow-sm">
+                    ${p.category}
                 </div>
-            `).join('');
-        } 
-		
-   function filterProducts(category) {
-            const filtered = category === 'all' 
-                ? products 
-                : products.filter(p => p.category === category);
-            
-            renderProducts(filtered);
-            
-            // อัปเดตสีปุ่ม Filter
-            const buttons = document.querySelectorAll('.category-btn');
-            buttons.forEach(btn => {
-                // ถ้าปุ่มไหนมี onclick ตรงกับหมวดหมู่ที่เลือก ให้ไฮไลท์สี
-                if (btn.getAttribute('onclick').includes(category)) {
-                    btn.classList.add('bg-brick', 'text-white');
-                    btn.classList.remove('bg-white', 'text-gray-600');
-                } else {
-                    btn.classList.remove('bg-brick', 'text-white');
-                    btn.classList.add('bg-white', 'text-gray-600');
-                }
-            });
-        }
-		
-   function renderProducts() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = products.map(p => `
-                <div class="bg-white rounded-[2.5rem] overflow-hidden card-shadow flex flex-col h-full border border-gray-50">
-                    <img src="${p.img}" class="aspect-[4/5] object-cover">
-                    <div class="p-8 flex-grow flex flex-col">
-                        <h3 class="font-bold text-xl mb-4">${p.name}</h3>
-                        <div class="mt-auto flex justify-between items-center">
-                            <span class="text-2xl font-bold text-brick">฿${p.price.toLocaleString()}</span>
-                            <button onclick="addToCart(${p.id})" class="bg-gray-50 p-4 rounded-2xl hover:bg-brick hover:text-white transition-all">+</button>
-                        </div>
-                    </div>
+            </div>
+            <div class="p-8 flex-grow flex flex-col">
+                <h3 class="font-bold text-xl mb-4 text-gray-800">${p.name}</h3>
+                <div class="mt-auto flex justify-between items-center">
+                    <span class="text-2xl font-bold text-brick">฿${p.price.toLocaleString()}</span>
+                    <button onclick="addToCart(${p.id})" class="bg-gray-100 p-4 rounded-2xl hover:bg-brick hover:text-white transition-all transform active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
                 </div>
-            `).join('');
-        }
+            </div>
+        </div>
+    `).join('');
+}
 
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const inCart = cart.find(i => i.id === id);
-            if(inCart) inCart.qty++; else cart.push({...product, qty: 1});
-            updateCart();
-            toggleCart();
+// ฟังก์ชันกรองสินค้า
+function filterProducts(category) {
+    const filtered = category === 'all' 
+        ? products 
+        : products.filter(p => p.category === category);
+    
+    renderProducts(filtered);
+    
+    // จัดการสถานะปุ่ม (Active Class)
+    const buttons = document.querySelectorAll('.category-btn');
+    buttons.forEach(btn => {
+        const btnOnclick = btn.getAttribute('onclick');
+        if (btnOnclick && btnOnclick.includes(`'${category}'`)) {
+            btn.classList.add('bg-brick', 'text-white');
+            btn.classList.remove('bg-white', 'text-gray-600');
+        } else {
+            btn.classList.remove('bg-brick', 'text-white');
+            btn.classList.add('bg-white', 'text-gray-600');
         }
+    });
+}
 
-        function updateCart() {
-            const items = document.getElementById('cart-items');
-            let total = 0, count = 0;
-            items.innerHTML = cart.map(i => {
-                total += i.price * i.qty; count += i.qty;
-                return `<div class="flex gap-4 items-center bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                    <div class="flex-grow font-bold text-sm">${i.name} (x${i.qty})</div>
-                    <div class="text-brick font-bold">฿${(i.price * i.qty).toLocaleString()}</div>
-                </div>`;
-            }).join('') || `<p class="text-center text-gray-400 py-20">ไม่มีสินค้าในตะกร้า</p>`;
-            document.getElementById('cart-count').innerText = count;
-            document.getElementById('cart-total').innerText = `฿${total.toLocaleString()}`;
-            document.getElementById('checkout-btn').disabled = cart.length === 0;
-        }
+// --- ฟังก์ชันจัดการตะกร้าสินค้า ---
+function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    const inCart = cart.find(i => i.id === id);
+    if(inCart) {
+        inCart.qty++;
+    } else {
+        cart.push({...product, qty: 1});
+    }
+    updateCart();
+    // ถ้าอยากให้กดแล้วเปิดตะกร้าเลยให้เปิดบรรทัดล่างนี้ครับ
+    // toggleCart(); 
+}
 
-        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('translate-x-full'); }
-        function showCheckout() { document.getElementById('checkout-modal').classList.replace('hidden', 'flex'); }
-        function closeCheckout() { document.getElementById('checkout-modal').classList.replace('flex', 'hidden'); }
+function updateCart() {
+    const itemsContainer = document.getElementById('cart-items');
+    let total = 0, count = 0;
+    
+    itemsContainer.innerHTML = cart.map(i => {
+        total += i.price * i.qty; 
+        count += i.qty;
+        return `
+            <div class="flex gap-4 items-center bg-gray-50 p-4 rounded-2xl border border-gray-100 mb-2">
+                <img src="${i.img}" class="w-12 h-12 rounded-lg object-cover">
+                <div class="flex-grow font-bold text-sm">
+                    ${i.name} <span class="text-gray-400 text-xs">x${i.qty}</span>
+                </div>
+                <div class="text-brick font-bold">฿${(i.price * i.qty).toLocaleString()}</div>
+            </div>`;
+    }).join('') || `<p class="text-center text-gray-400 py-20">ไม่มีสินค้าในตะกร้า</p>`;
+    
+    // อัปเดตตัวเลขบนหน้าจอ
+    if(document.getElementById('cart-count')) document.getElementById('cart-count').innerText = count;
+    if(document.getElementById('cart-total')) document.getElementById('cart-total').innerText = `฿${total.toLocaleString()}`;
+    if(document.getElementById('checkout-btn')) document.getElementById('checkout-btn').disabled = cart.length === 0;
+}
+
+function toggleCart() { 
+    document.getElementById('cart-sidebar').classList.toggle('translate-x-full'); 
+}
+
+function showCheckout() { 
+    document.getElementById('checkout-modal').classList.replace('hidden', 'flex'); 
+}
+
+function closeCheckout() { 
+    document.getElementById('checkout-modal').classList.replace('flex', 'hidden'); 
+}
+
+
 
         // ฟังก์ชันบันทึกรูปภาพใหม่
         async function saveAsImage() {
@@ -470,6 +488,7 @@
     </script>
 </body>
 </html>
+
 
 
 
