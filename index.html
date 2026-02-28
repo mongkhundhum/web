@@ -311,7 +311,46 @@
         ];
 
         let cart = [];
-    
+		
+   function renderProducts(items) {
+            const grid = document.getElementById('product-grid');
+            if (!grid) return; // กัน Error ถ้าหา Grid ไม่เจอ
+
+            grid.innerHTML = items.map(product => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group">
+                    <img src="${product.img}" class="w-full h-64 object-cover" alt="${product.name}">
+                    <div class="p-6">
+                        <span class="text-xs font-semibold text-brick uppercase tracking-wider">${product.category}</span>
+                        <h4 class="text-xl font-bold mt-2 mb-4">${product.name}</h4>
+                        <button onclick="openCheckout()" class="w-full py-3 bg-gray-900 text-white rounded-xl font-medium hover:bg-brick transition-colors">
+                            สั่งจอง
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        } 
+		
+   function filterProducts(category) {
+            const filtered = category === 'all' 
+                ? products 
+                : products.filter(p => p.category === category);
+            
+            renderProducts(filtered);
+            
+            // อัปเดตสีปุ่ม Filter
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                // ถ้าปุ่มไหนมี onclick ตรงกับหมวดหมู่ที่เลือก ให้ไฮไลท์สี
+                if (btn.getAttribute('onclick').includes(category)) {
+                    btn.classList.add('bg-brick', 'text-white');
+                    btn.classList.remove('bg-white', 'text-gray-600');
+                } else {
+                    btn.classList.remove('bg-brick', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-600');
+                }
+            });
+        }
+		
    function renderProducts() {
             const grid = document.getElementById('product-grid');
             grid.innerHTML = products.map(p => `
@@ -431,6 +470,7 @@
     </script>
 </body>
 </html>
+
 
 
 
