@@ -448,6 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true; btn.innerHTML = '<span class="loader"></span> กำลังส่งข้อมูล...';
 
             const formData = {
+				timestamp: new Date().toLocaleString('th-TH'),
                 name: document.getElementById('cust-name').value,
                 phone: document.getElementById('cust-phone').value,
                 address: document.getElementById('cust-address').value,
@@ -490,6 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
 </body>
 </html>
+
 
 
 
